@@ -4,9 +4,9 @@ const querystring = require('querystring');
 
 
 router.post('/', (req, res) => {
-    city = req.body.city || null;
-    state = req.body.state || " ";
-    country = req.body.country || " ";
+    const city = req.body.city || null;
+    const state = req.body.state || " ";
+    const country = req.body.country || " ";
 
     if(city === null){
         res.status(400)
@@ -18,8 +18,6 @@ router.post('/', (req, res) => {
             units: 'imperial',
             appid: process.env.OPEN_WEATHER_API_KEY
         }, "&", "=")
-
-        console.log("Accessing " + url)
 
         fetch(url)
         .then(openWeatherAPIResponse => {

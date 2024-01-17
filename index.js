@@ -4,6 +4,7 @@ const app = express()
 const bodyParser = require("body-parser");
 const querystring = require('querystring');
 const cors = require('cors');
+const path = require('path')
 const port = process.env.BACKEND_PORT || 6969
 
 const weather = require('./api/weather/router')
@@ -13,6 +14,22 @@ app.use(cors())
 app.options('*', cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+const _dirname = path.dirname("")
+const buildPath = path.join(_dirname  , "../client/build");
+
+app.use(express.static(buildPath))
+
+app.get("/*", function(req, res){
+    res.sendFile(
+        path.join(__dirname, "../client/build/index.html"),
+        function (err) {
+            if (err) {
+            res.status(500).send(err);
+            }
+        }
+    );
+})
 
 
 const generateRandomString = (length) => {
