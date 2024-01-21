@@ -31,12 +31,11 @@ secretsManager.getSecretValue({ SecretId: "portfolio" }, (err, data) => {
     // Parse the secret JSON data
     const secret = JSON.parse(data.SecretString);
 
-    // Use the secret values in your application
     const port = secret.port;
 
     app.get("/*", function (req, res) {
       res.sendFile(
-        path.join(__dirname, "../client/build/index.html"),
+        path.join(_dirname, "../client/build/index.html"),
         function (err) {
           if (err) {
             res.status(500).send(err);
