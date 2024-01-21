@@ -19,8 +19,8 @@ app.options("*", cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const _dirname = path.dirname("");
-const buildPath = path.join(_dirname, "../client/build");
+const parent_dir = path.resolve(__dirname, '..')
+const buildPath = path.join(parent_dir, "client/build");
 
 app.use(express.static(buildPath));
 
@@ -30,12 +30,12 @@ secretsManager.getSecretValue({ SecretId: "portfolio" }, (err, data) => {
   } else {
     // Parse the secret JSON data
     const secret = JSON.parse(data.SecretString);
-
     const port = secret.port;
 
     app.get("/*", function (req, res) {
+      console.log(buildPath)
       res.sendFile(
-        path.join(_dirname, "../client/build/index.html"),
+        path.join(buildPath, "index.html"),
         function (err) {
           if (err) {
             res.status(500).send(err);
