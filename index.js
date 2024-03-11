@@ -31,7 +31,6 @@ const weather = require("./api/weather/router");
 const email = require("./api/email/router");
 
 app.get("/*", function (req, res) {
-  console.log(buildPath)
   res.sendFile(
     path.join(buildPath, "index.html"),
     function (err) {
